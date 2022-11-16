@@ -75,7 +75,7 @@ class FlightPage extends Component {
                 <FlightInfo/>
                 <SeatChart/>
                 <SelectedSeat onSubmit={this.saveReservation}/>
-         </div>
+            </div>
         );
     }
 }

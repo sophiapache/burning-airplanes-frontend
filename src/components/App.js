@@ -1,11 +1,11 @@
 import FlightPage from './Flightpage/FlightPage';
-// import SearchPage from './Homepage/SearchPage';
+import SearchPage from './Homepage/SearchPage';
 
 function App() {
   return (
     <div>
       <FlightPage />
-      {/* <SearchPage /> */}
+      <SearchPage />
     </div>
   );
 }
