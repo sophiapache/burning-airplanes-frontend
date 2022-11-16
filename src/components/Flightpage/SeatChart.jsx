@@ -1,7 +1,30 @@
 import React from 'react';
 
 const SeatChart = (props) => {
-    console.log(props)
+    
+    // const __handleSelection = (e) => {
+
+    // }
+
+    const getButton = (seat) => {
+
+        if ('user' in seat) {
+            return (
+                <button>
+                    <strong>user</strong>
+                </button>
+            );
+        } else {
+            return (
+                <button>
+                    {seat.seat}
+                </button>
+            );
+        }
+        
+    }
+
+
     return (
         <div className="seat-chart-container">
             { props.seats.map((column) => {
@@ -9,7 +32,7 @@ const SeatChart = (props) => {
                     <div className="row-container">
                         {column.map((row) => {
                             return (
-                                <button>{row.seat}</button>
+                                getButton(row)
                             );
                         })}
                     </div>
