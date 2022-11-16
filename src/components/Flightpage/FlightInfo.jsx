@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const FlightInfo = () => {
+const FlightInfo = (props) => {
     return (
         <div>
             <h1>Company name</h1>
             <ul>
-                <li>00/00/00</li>
-                <li>flight 00</li>
-                <li>From > To</li>
+                <li>{props.number}</li>
+                <li>{props.date}</li>
+                <li>{props.origin} > {props.destination}</li>
             </ul>
         </div>
     );
