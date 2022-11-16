@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.flight-info-container {
+  display: flex;
+  justify-content: space-around;
+}

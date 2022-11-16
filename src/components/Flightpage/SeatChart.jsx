@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const SeatChart = () => {
-    return (
-        <div>
-            <table>
-                <th>A</th>
-            </table>
-        </div>
-    );
+const SeatChart = (props) => {
+    
+    // return (
+    //     <div>
+    //         { props.availableSeats.map((column) => 
+    //             column.map((seat) => <button>{seat}</button> )  
+    //         )}; 
+    //     </div>
+    // );
 }
 
 export default SeatChart;

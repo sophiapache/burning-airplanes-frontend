@@ -3,12 +3,12 @@ import React from 'react';
 const FlightInfo = (props) => {
     return (
         <div>
-            <h1>Company name</h1>
-            <ul>
-                <li>{props.number}</li>
-                <li>{props.date}</li>
-                <li>{props.origin} > {props.destination}</li>
-            </ul>
+            <h1>Virgin Airplane</h1>
+            <div className='flight-info-container'>
+                <div>{props.number}</div>
+                <div>{props.date}</div>
+                <div>{props.origin} > {props.destination}</div>
+            </div>
         </div>
     );
 }
