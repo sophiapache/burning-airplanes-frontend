@@ -20,15 +20,14 @@ class FlightPage extends Component {
             origin: '',
             destination: '',
             date: '',
-            selectedRow: 0,
-            selectedColumn: 0
+            selectedSeat: ''
         }
 
         this._saveReservation = this._saveReservation.bind(this)
     }
 
-    fetchFlightData = (flightId) => { // find a way to grab flightId from homepage
-        // (`http://localhost:3000/flights/${flightId}.json`) -> change to this later
+    fetchFlightData = (params) => { // find a way to grab flightId from homepage
+        // (`http://localhost:3000/flights/${params.id}.json`) -> change to this later
         axios(`http://localhost:3000/flights/10.json`).then((response) => {
             const flightData = Object.assign({}, this.state);
             flightData.userId = response.data.user_id;
@@ -89,6 +88,14 @@ class FlightPage extends Component {
     componentDidMount() {
         this.fetchFlightData();
     }
+
+    _handleSelectedSeat = (seat) => {
+        console.log('seat is', seat)
+        const updatedState = Object.assign({}, this.state);
+        updatedState.selectedSeat = seat;
+        console.log(updatedState.selectedSeat)
+        this.setState(updatedState)
+    }
     
     _saveReservation() {
         // logic for posting on the database -> reservation
@@ -96,8 +103,8 @@ class FlightPage extends Component {
         axios.post(RESERVATION_URL, {
             user_id: this.state.userId,
             airplane_id: this.state.airplaneId,
-            row: this.state.selectedRow, // this info will be sent by the selected seat
-            column: this.state.selectedColumn // same
+            row: this.state.selectedRow, // TODO separate it in row and column before send to rails
+            column: this.state.selectedColumn 
         }).then(() => {
             this.fetchFlightData()
         });
@@ -116,10 +123,10 @@ class FlightPage extends Component {
                 />
                 <SeatChart
                     seats={flight.totalSeats}
+                    onSelectedSeat={this._handleSelectedSeat}
                 />
                 <SelectedSeat
-                    row={flight.selectedRow}
-                    column={flight.selectedColumn}
+                    seat={this.selectedSeat}
                     onSubmit={this._saveReservation}
                 />
             </div>

@@ -5,7 +5,8 @@ const SeatChart = (props) => {
     const _handleClick = (e) => {
         e.preventDefault();
         console.log(e.target.innerText)
-        // const buttonValue = e.target.innerText
+        const buttonValue = e.target.innerText;
+        props.onSelectedSeat(buttonValue);
     }
 
     const getButton = (seat) => {

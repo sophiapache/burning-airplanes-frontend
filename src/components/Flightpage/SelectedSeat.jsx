@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-const SelectedSeat = () => {
+const SelectedSeat = (props) => {
     return (
         <div>
-            Selected seat coming soon
+            {props.seat}
         </div>
     );
 }
