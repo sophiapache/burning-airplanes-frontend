@@ -49,10 +49,9 @@ class FlightPage extends Component {
                 for (let i = 0; i < response.data.length; i++) {
                     const currentSeat = response.data[i].seat;
                     reservedSeats[`${response.data[i].id}`] = {
-                        row: currentSeat.slice(0, -1),
-                        column: currentSeat.slice(-1).charCodeAt(0) % 32,
-                        seat: response.data[i].seat,
-                        user: response.data[i].user_id.email
+                        row: currentSeat.slice(0, -1), // seat number
+                        column: currentSeat.slice(-1).charCodeAt(0) % 32, // seat letter to number
+                        user: response.data[i].user_id // todo: find user name
                     }
                 }
 
@@ -62,8 +61,11 @@ class FlightPage extends Component {
                     for (let i = 0; i < totalSeats.length; i++) {
                         totalSeats[i] = new Array(response.data.columns);
                         for (let j = 0; j < totalSeats[i].length; j++) {
+                            const seatLetter = String.fromCharCode(j + "A".charCodeAt(0));
                             totalSeats[i][j] = {
-                                seat: `${i}-${j}`, // TODO convert j to letter
+                                seat: `${seatLetter}${i+1}`,
+                                row: i,
+                                column: j
                             };
                         }
                     }
@@ -73,8 +75,7 @@ class FlightPage extends Component {
                         const row = reservedSeats[key].row;
                         const column = reservedSeats[key].column;
                         console.log(row, column)
-                        totalSeats[row - 1][column - 1]['user'] = reservedSeats.user;
-                        // maybe instead of subtract 1 here, we should also use the "numerical way" that arrays count in the database -> intead of using 14E, it would be 13D, and then it would just be changed on the view
+                        totalSeats[row - 1][column - 1]['user'] = reservedSeats[key].user;
                     })
 
                     const flightData = Object.assign({}, this.state);
@@ -86,10 +87,7 @@ class FlightPage extends Component {
     }
 
     componentDidMount() {
-        this.fetchFlightData()
-            // .then(() => this.fetchAirplanesSeats())
-            // .then(() => this.matchAvailableSeats()); 
-        // / break it down because after posting reservation, i'll call it there too
+        this.fetchFlightData();
     }
     
     _saveReservation() {
@@ -101,7 +99,7 @@ class FlightPage extends Component {
             row: this.state.selectedRow, // this info will be sent by the selected seat
             column: this.state.selectedColumn // same
         }).then(() => {
-            this.matchAvailableSeats()
+            this.fetchFlightData()
         });
     }
     
@@ -129,49 +127,3 @@ class FlightPage extends Component {
     };
 }
 export default FlightPage;
-
-// fetchReservedSeats = () => {
-//     let reservedSeats = {}
-//     axios(ALL_RESERVATIONS_URL).then((response) => {
-//         for (let i = 0; i < response.data.length; i++) { 
-//             const currentSeat = response.data.seat[i].split("");
-//             reservedSeats[`${response.data.id}`] = {
-//                 row: currentSeat[0],
-//                 column: currentSeat[1].charCodeAt(0) % 32
-//             }
-//         }
-//     }).then(() => {
-//         const reservedSeats = this.fetchReservedSeats();
-//         let updatedSeats = this.state.totalSeats 
-//         Object.keys(reservedSeats).forEach(key => {
-//             const row =reservedSeats[key].row;
-//             const column = reservedSeats[key].column;
-//             updatedSeats[row][column] = false;
-//         })
-//         const flightData = Object.assign({}, this.state);
-//         flightData.availableSeats = updatedSeats;
-//         this.setState(flightData);
-//     })
-// }
-
-// matchAvailableSeats = () => {
-//    const reservedSeats = this.fetchReservedSeats();
-//    let updatedSeats = this.state.totalSeats 
-//    Object.keys(reservedSeats).forEach(key => {
-//         const row =reservedSeats[key].row;
-//         const column = reservedSeats[key].column;
-//         updatedSeats[row][column] = false;
-//    })
-//    const flightData = Object.assign({}, this.state);
-//    flightData.availableSeats = updatedSeats;
-//    this.setState(flightData);
-// }
-
-// fetchAirplanesSeats = () => {
-//     axios(`http://localhost:3000/airplanes/${this.state.airplaneId}.json`).then((response) => {
-//         const totalSeats = new Array(response.data.columns).fill(new Array(response.data.rows).fill(true));
-//         const flightData = Object.assign({}, this.state);
-//         flightData.totalSeats = totalSeats;
-//         this.setState(flightData);
-//     })
-// }

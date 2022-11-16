@@ -2,21 +2,23 @@ import React from 'react';
 
 const SeatChart = (props) => {
     
-    // const __handleSelection = (e) => {
-
-    // }
+    const _handleClick = (e) => {
+        e.preventDefault();
+        console.log(e.target.innerText)
+        // const buttonValue = e.target.innerText
+    }
 
     const getButton = (seat) => {
 
         if ('user' in seat) {
             return (
-                <button>
+                <button key={seat.seat} disabled>
                     <strong>user</strong>
                 </button>
             );
         } else {
             return (
-                <button>
+                <button onClick={_handleClick} key={seat.seat}>
                     {seat.seat}
                 </button>
             );
