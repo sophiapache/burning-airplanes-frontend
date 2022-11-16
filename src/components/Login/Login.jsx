@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 const Login = ({ user, onSignOut }) => {
   return (
@@ -10,18 +11,47 @@ const Login = ({ user, onSignOut }) => {
 };
 
 class SignInForm extends Component {
+  constructor() {
+    super();
+    this.handleEmailEdit = this.handleEmailEdit.bind(this);
+    this.handlePasswordEdit = this.handlePasswordEdit.bind(this);
+  }
+
   signInControl(e) {
     e.preventDefault();
-    let email = this.email.value;
-    this.props.onSignIn(email);
+    console.log(this.state);
+    // let email = this.email.value;
+    // this.onSignIn(email);
   }
+
+  handleEmailEdit = (event) => {
+    this.setState({ email: event.target.value });
+  };
+
+  handlePasswordEdit = (event) => {
+    this.setState({ password: event.target.value });
+  };
 
   render() {
     return (
-      <div>
+      <div className="LoginContainer">
+        <h1>Login</h1>
         <form onSubmit={this.signInControl.bind(this)}>
-          <input type="string" id="login" ref="email" placeholder="Email" />
-          <input type="submit" value="login" />
+          <input
+            type="string"
+            id="login"
+            ref="email"
+            onChange={this.handleEmailEdit}
+            placeholder="Email"
+          />
+          <input
+            type="password"
+            id="password"
+            onChange={this.handlePasswordEdit}
+            ref="password"
+            placeholder="Password"
+          />
+          <input type="submit" value="Login" />
         </form>
       </div>
     );
@@ -36,10 +66,11 @@ class UserLogin extends Component {
     };
   }
 
-  signIn(email) {
+  signIn(email, password) {
     this.setState({
       user: {
         email,
+        password,
       },
     });
   }
