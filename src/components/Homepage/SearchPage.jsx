@@ -24,17 +24,32 @@ class SearchPage extends Component {
             });
     };
 
-    // fetchFlights() {
-    //     axios(FLIGHTS_URL).then((response) => {
-    //         const flights = response.data;
-    //         })
-    // };
+    _handleInputOne = (e) => {
+        this.setState({origin: e.target.value});
+    };
+
+    _handleInputTwo = (e) => {
+        this.setState({destination: e.target.value});
+    };
+
+    // filter this.state.flights array and have origin key match this.state.origin
+    filterFlights = () => {
+        let flights = [];
+        for(let i=0;i<this.state.flights.length;i++) {
+            let flight = this.state.flights[i];
+            if (flight.origin === this.state.origin && flight.destination === this.state.destination) {
+                flights.push(flight);
+            }
+        } console.log(flights);
+    };
+
+
 
     render() {
         return (
             <div>
                 <h1>Airline</h1>
-                <SearchForm onSubmit={ this.filterFlights }/>
+                <SearchForm _handleInputOne={ this._handleInputOne } _handleInputTwo={ this._handleInputTwo } onSubmit={ this.filterFlights }/>
                 <FlightDisplay flights={ this.state.flights } />
             </div>
         );
