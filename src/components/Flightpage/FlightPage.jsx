@@ -29,7 +29,7 @@ class FlightPage extends Component {
 
     fetchFlightData = (flightId) => { // find a way to grab flightId from homepage
         // (`http://localhost:3000/flights/${flightId}.json`) -> change to this later
-        axios(`http://localhost:3000/flights/3.json`).then((response) => {
+        axios(`http://localhost:3000/flights/10.json`).then((response) => {
             const flightData = Object.assign({}, this.state);
             flightData.userId = response.data.user_id;
             flightData.airplaneId = response.data.airplane_id;
@@ -45,13 +45,14 @@ class FlightPage extends Component {
             let reservedSeats = {}
             // http://localhost:3000/flights/3/reservations.json
             axios(ALL_RESERVATIONS_URL).then((response) => {
+                console.log(response)
                 for (let i = 0; i < response.data.length; i++) {
-                    const currentSeat = response.data.seat[i].split("");
-                    reservedSeats[`${response.data.id}`] = {
-                        row: currentSeat[0],
-                        column: currentSeat[1].charCodeAt(0) % 32,
-                        seat: response.data.seat[i],
-                        user: response.data.user_id.email
+                    const currentSeat = response.data[i].seat;
+                    reservedSeats[`${response.data[i].id}`] = {
+                        row: currentSeat.slice(0, -1),
+                        column: currentSeat.slice(-1).charCodeAt(0) % 32,
+                        seat: response.data[i].seat,
+                        user: response.data[i].user_id.email
                     }
                 }
 
@@ -67,10 +68,13 @@ class FlightPage extends Component {
                         }
                     }
 
+                    console.log(totalSeats)
                     Object.keys(reservedSeats).forEach(key => {
                         const row = reservedSeats[key].row;
                         const column = reservedSeats[key].column;
-                        totalSeats[row][column].user = reservedSeats.user;
+                        console.log(row, column)
+                        totalSeats[row - 1][column - 1]['user'] = reservedSeats.user;
+                        // maybe instead of subtract 1 here, we should also use the "numerical way" that arrays count in the database -> intead of using 14E, it would be 13D, and then it would just be changed on the view
                     })
 
                     const flightData = Object.assign({}, this.state);
@@ -105,7 +109,7 @@ class FlightPage extends Component {
         const flight = this.state;
     
         return (
-            <div>
+            <div className="flight-page-container">
                 <FlightInfo
                     number={flight.flightNumber}
                     origin={flight.origin}

@@ -16,3 +16,28 @@ code {
   display: flex;
   justify-content: space-around;
 }
+
+.seat-chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1px;
+}
+
+.row-container {
+  display: flex;
+  column-gap: 10px;
+  width: 100%;
+  justify-content: center;
+}
+
+.row-container button {
+  width: 5%
+}
+
+.flight-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  justify-content: space-around;
+}
