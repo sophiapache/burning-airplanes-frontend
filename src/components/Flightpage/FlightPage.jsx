@@ -126,7 +126,7 @@ class FlightPage extends Component {
                     onSelectedSeat={this._handleSelectedSeat}
                 />
                 <SelectedSeat
-                    seat={this.selectedSeat}
+                    seat={flight.selectedSeat}
                     onSubmit={this._saveReservation}
                 />
             </div>

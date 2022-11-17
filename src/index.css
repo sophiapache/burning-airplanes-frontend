@@ -21,7 +21,7 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 1px;
+  row-gap: 4px;
 }
 
 .row-container {
@@ -32,7 +32,7 @@ code {
 }
 
 .row-container button {
-  width: 5%
+  width: 7%
 }
 
 .flight-page-container {
@@ -40,4 +40,27 @@ code {
   flex-direction: column;
   height: 80vh;
   justify-content: space-around;
+}
+
+.selected-seat-container {
+  display: flex;
+  justify-content: center;
+}
+
+.available-seat {
+ background-color: rgb(89, 188, 89);
+}
+
+.unavailable-seat {
+  background-color: rgb(197, 113, 113);
+  
+}
+
+.available-seat, .unavailable-seat, .active-button {
+  border-radius: 10px;
+  border: 1px;
+}
+
+.active-button {
+  background-color: rgb(96, 96, 149);
 }
