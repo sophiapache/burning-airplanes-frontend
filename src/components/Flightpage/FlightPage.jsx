@@ -20,7 +20,8 @@ class FlightPage extends Component {
             origin: '',
             destination: '',
             date: '',
-            selectedSeat: ''
+            selectedSeat: '', 
+            reservations: []
         }
 
         this._saveReservation = this._saveReservation.bind(this)
@@ -28,13 +29,15 @@ class FlightPage extends Component {
 
     fetchFlightData = () => { // find a way to grab flightId from homepage
         // (`http://localhost:3000/flights/${params.id}.json`) -> change to this later
-        axios(`http://localhost:3000/flights/${this.props.match.params.id}.json`).then((response) => {
+        const flightId = this.props.match.params.id
+        axios(`http://localhost:3000/flights/${flightId}.json`).then((response) => {
             const flightData = Object.assign({}, this.state);
             flightData.userId = response.data.user_id;
             flightData.airplaneId = response.data.airplane_id;
             flightData.flightNumber = response.data.flight_number;
             flightData.origin = response.data.origin;
             flightData.destination = response.data.destination;
+            flightData.reservations = response.data.reservations;
             const date = new Date(response.data.date).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
             flightData.date = date;
             this.setState(flightData);
@@ -42,15 +45,16 @@ class FlightPage extends Component {
             // fetch airplane seats
 
             let reservedSeats = {}
-            // http://localhost:3000/flights/3/reservations.json
-            axios(ALL_RESERVATIONS_URL).then((response) => {
-                console.log(response)
-                for (let i = 0; i < response.data.length; i++) {
-                    const currentSeat = response.data[i].seat;
-                    reservedSeats[`${response.data[i].id}`] = {
+            // `http://localhost:3000/flights/${flightId}/reservations.json`
+            // axios(`http://localhost:3000/reservations.json`).then((response) => {
+            //     console.log('reservation',response)
+                for (let i = 0; i < flightData.reservations.length; i++) {
+                    const currentSeat = flightData.reservations[i].seat;
+                    console.log(flightData.reservations[i])
+                    reservedSeats[`${flightData.reservations[i].id}`] = {
                         row: currentSeat.slice(0, -1), // seat number
                         column: currentSeat.slice(-1).charCodeAt(0) % 32, // seat letter to number
-                        user: response.data[i].user_id // todo: find user name
+                        user: flightData.reservations[i].user_id // todo: find user name
                     }
                 }
 
@@ -81,8 +85,7 @@ class FlightPage extends Component {
                     flightData.totalSeats = totalSeats;
                     this.setState(flightData);
                 })
-            })
-        })
+        });
     }
 
     componentDidMount() {

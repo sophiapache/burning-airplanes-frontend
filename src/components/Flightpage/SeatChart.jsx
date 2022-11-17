@@ -22,7 +22,7 @@ const SeatChart = (props) => {
         if ('user' in seat) {
             return (
                 <button className="unavailable-seat" key={seat.seat} disabled>
-                    <strong>user</strong>
+                    <strong>{seat.user}</strong>
                 </button>
             );
         } else {
