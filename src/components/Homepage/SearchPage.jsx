@@ -10,6 +10,7 @@ class SearchPage extends Component {
     constructor() {
         super();
         this.state = {
+            allFlights: [],
             flights: [],
             flight_id: [],
             origin: '',
@@ -20,7 +21,7 @@ class SearchPage extends Component {
 
     componentDidMount() {
             axios(FLIGHTS_URL).then((response) => {
-                this.setState({flights: response.data});
+                this.setState({allFlights: response.data});
             });
     };
 
@@ -35,12 +36,13 @@ class SearchPage extends Component {
     // filter this.state.flights array and have origin key match this.state.origin
     filterFlights = () => {
         let flights = [];
-        for(let i=0;i<this.state.flights.length;i++) {
-            let flight = this.state.flights[i];
+        for(let i=0;i<this.state.allFlights.length;i++) {
+            let flight = this.state.allFlights[i];
             if (flight.origin === this.state.origin && flight.destination === this.state.destination) {
                 flights.push(flight);
             }
         } console.log(flights);
+        this.setState({flights: flights});
     };
 
 
