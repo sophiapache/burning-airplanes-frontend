@@ -2,8 +2,8 @@ import React from 'react';
 
 const SelectedSeat = (props) => {
     return (
-        <div>
-            {props.seat}
+        <div className="selected-seat-container">
+            Selected seat {props.seat}
         </div>
     );
 }

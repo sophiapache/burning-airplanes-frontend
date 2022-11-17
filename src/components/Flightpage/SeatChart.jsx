@@ -1,10 +1,18 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const SeatChart = (props) => {
-    
+    const [isActive, setIsActive] = useState(false);
+
+    const toggleClass = (e) => {
+        setIsActive(!useState)
+    }
+
+
     const _handleClick = (e) => {
         e.preventDefault();
-        console.log(e.target.innerText)
+        toggleClass(e);  
+
+        e.target.className = "active-button";
         const buttonValue = e.target.innerText;
         props.onSelectedSeat(buttonValue);
     }
@@ -13,20 +21,19 @@ const SeatChart = (props) => {
 
         if ('user' in seat) {
             return (
-                <button key={seat.seat} disabled>
+                <button className="unavailable-seat" key={seat.seat} disabled>
                     <strong>user</strong>
                 </button>
             );
         } else {
             return (
-                <button onClick={_handleClick} key={seat.seat}>
+                <button className={`unavailable-seat ${isActive ? "" : "active-button"}`} onClick={_handleClick} key={seat.seat}>
                     {seat.seat}
                 </button>
             );
         }
         
     }
-
 
     return (
         <div className="seat-chart-container">
