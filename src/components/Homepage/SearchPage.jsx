@@ -50,7 +50,7 @@ class SearchPage extends Component {
     render() {
         return (
             <div>
-                <h1>Airline</h1>
+                <h1>Search For Flights</h1>
                 <SearchForm _handleInputOne={ this._handleInputOne } _handleInputTwo={ this._handleInputTwo } onSubmit={ this.filterFlights }/>
                 <FlightDisplay flights={ this.state.flights } />
             </div>

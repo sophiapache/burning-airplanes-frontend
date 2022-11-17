@@ -14,9 +14,9 @@ const SearchForm = (props) => {
 
     return (
         <form onSubmit={ _handleSubmit }>
-            <label for="origin">Origin</label>
+            <label for="origin">Origin:</label>
             <input type="text" onChange={ props._handleInputOne }  id="origin" name="origin" required />
-            <label for="destination">Destination</label>
+            <label for="destination">Destination:</label>
             <input type="text" onChange={ props._handleInputTwo }  id="destination" name="destination" required />
             <input type="submit" value="Search" />
         </form>
