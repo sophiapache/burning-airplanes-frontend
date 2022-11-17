@@ -26,9 +26,9 @@ class FlightPage extends Component {
         this._saveReservation = this._saveReservation.bind(this)
     }
 
-    fetchFlightData = (params) => { // find a way to grab flightId from homepage
+    fetchFlightData = () => { // find a way to grab flightId from homepage
         // (`http://localhost:3000/flights/${params.id}.json`) -> change to this later
-        axios(`http://localhost:3000/flights/10.json`).then((response) => {
+        axios(`http://localhost:3000/flights/${this.props.match.params.id}.json`).then((response) => {
             const flightData = Object.assign({}, this.state);
             flightData.userId = response.data.user_id;
             flightData.airplaneId = response.data.airplane_id;
