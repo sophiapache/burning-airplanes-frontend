@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 const SeatChart = (props) => {
-    const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState(true);
 
     const toggleClass = (e) => {
         setIsActive(!useState)
@@ -10,7 +10,7 @@ const SeatChart = (props) => {
 
     const _handleClick = (e) => {
         e.preventDefault();
-        toggleClass(e);  
+        toggleClass();  
 
         e.target.className = "active-button";
         const buttonValue = e.target.innerText;
@@ -22,12 +22,12 @@ const SeatChart = (props) => {
         if ('user' in seat) {
             return (
                 <button className="unavailable-seat" key={seat.seat} disabled>
-                    <strong>user</strong>
+                    <strong>{seat.user}</strong>
                 </button>
             );
         } else {
             return (
-                <button className={`unavailable-seat ${isActive ? "" : "active-button"}`} onClick={_handleClick} key={seat.seat}>
+                <button className={`available-seat ${isActive ? "" : "active-button"}`} onClick={_handleClick} key={seat.seat}>
                     {seat.seat}
                 </button>
             );
